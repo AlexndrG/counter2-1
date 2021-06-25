@@ -3,8 +3,7 @@ import s from './Button.module.css'
 
 type propsType = {
     name: string
-    counterValue: number
-    disableValue: number
+    disabled: boolean
     callback: () => void
 }
 
@@ -17,7 +16,7 @@ export const Button = (props: propsType) => {
     return (
         <button
             className={s.button}
-            disabled={props.counterValue === props.disableValue ? true : false}
+            disabled={props.disabled}
             onClick={onClickHandler}
         >
             {props.name}

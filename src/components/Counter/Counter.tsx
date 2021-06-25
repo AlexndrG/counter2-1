@@ -4,6 +4,7 @@ import {Display} from '../Display/Display';
 import {Button} from '../Button/Button';
 
 const MAX_COUNTER_VALUE = 5
+const MIN_COUNTER_VALUE = 0
 
 export const Counter = () => {
     const [counter, setCounter] = useState<number>(0)
@@ -23,22 +24,20 @@ export const Counter = () => {
             <div className={s.counter}>
 
                 <Display
-                    counterValue={counter}
-                    maxValue={MAX_COUNTER_VALUE}
+                    text={counter.toString()}
+                    error={counter >= MAX_COUNTER_VALUE}
                 />
 
                 <div className={s.buttons}>
                     <Button
                         name={'Inc'}
-                        counterValue={counter}
-                        disableValue={MAX_COUNTER_VALUE}
+                        disabled={counter >= MAX_COUNTER_VALUE}
                         callback={increment}
                     />
 
                     <Button
                         name={'Reset'}
-                        counterValue={counter}
-                        disableValue={0}
+                        disabled={counter === MIN_COUNTER_VALUE}
                         callback={reset}
                     />
                 </div>
