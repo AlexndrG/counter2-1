@@ -9,11 +9,21 @@
     border-radius: 5px;
 }
 
-.error {
+.counterFinish {
     color: greenyellow;
     font-weight: bold;
     font-size: 50px;
     background-color: deeppink;
     border: 2px solid deeppink;
     padding-top: 25px;
+}
+
+.textOK {
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 45px;
+}
+
+.textError {
+    color: red;
 }

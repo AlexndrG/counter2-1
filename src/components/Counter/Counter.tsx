@@ -3,44 +3,57 @@ import s from './Counter.module.css'
 import {Display} from '../Display/Display';
 import {Button} from '../Button/Button';
 
-const MAX_COUNTER_VALUE = 5
-const MIN_COUNTER_VALUE = 0
+type CounterPropsType = {
+    minValue: number
+    maxValue: number
+    text: string
+    textError: boolean
+}
 
-export const Counter = () => {
-    const [counter, setCounter] = useState<number>(0)
+export const Counter = (props: CounterPropsType) => {
+    const [counter, setCounter] = useState<number>(props.minValue)
+
+    if (props.minValue > counter) {
+        setCounter(props.minValue)
+    }
+
+    if (props.maxValue < counter) {
+        setCounter(props.maxValue)
+    }
 
     const increment = () => {
-        if (counter < MAX_COUNTER_VALUE) {
+        if (counter < props.maxValue) {
             setCounter(counter + 1)
         }
     }
 
     const reset = () => {
-        setCounter(0)
+        setCounter(props.minValue)
     }
 
     return (
         <div className={s.main}>
-            <div className={s.counter}>
 
+            <div className={s.display}>
                 <Display
-                    text={counter.toString()}
-                    error={counter >= MAX_COUNTER_VALUE}
+                    counterValue={counter}
+                    text={props.text}
+                    error={props.textError || counter >= props.maxValue}
+                />
+            </div>
+
+            <div className={s.buttons}>
+                <Button
+                    name={'Inc'}
+                    disabled={!!props.text || counter >= props.maxValue}
+                    callback={increment}
                 />
 
-                <div className={s.buttons}>
-                    <Button
-                        name={'Inc'}
-                        disabled={counter >= MAX_COUNTER_VALUE}
-                        callback={increment}
-                    />
-
-                    <Button
-                        name={'Reset'}
-                        disabled={counter === MIN_COUNTER_VALUE}
-                        callback={reset}
-                    />
-                </div>
+                <Button
+                    name={'Reset'}
+                    disabled={!!props.text || counter === props.minValue}
+                    callback={reset}
+                />
             </div>
         </div>
     )
