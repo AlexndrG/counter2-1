@@ -34,13 +34,11 @@ export const Counter = (props: CounterPropsType) => {
     return (
         <div className={s.main}>
 
-            <div className={s.display}>
-                <Display
-                    counterValue={counter}
-                    text={props.text}
-                    error={props.textError || counter >= props.maxValue}
-                />
-            </div>
+            <Display
+                counterValue={counter}
+                text={props.text}
+                error={props.textError || counter >= props.maxValue}
+            />
 
             <div className={s.buttons}>
                 <Button
@@ -55,6 +53,7 @@ export const Counter = (props: CounterPropsType) => {
                     callback={reset}
                 />
             </div>
+
         </div>
     )
 }

@@ -1,23 +1,15 @@
 .main {
-    text-align: center;
+    display: inline-block;
     border: 2px solid blue;
     border-radius: 5px;
-    padding: 10px;
-}
-
-.display {
-    display: inline-block;
-    width: 250px;
-    height: 120px;
-    padding: 10px;
+    vertical-align: bottom;
+    margin: 0 10px;
 }
 
 .buttons {
-    display: inline-block;
-    text-align: center;
     box-sizing: border-box;
     width: 250px;
     border: 2px solid blue;
     border-radius: 5px;
-    margin: 10px 0 0 0;
+    margin: 10px;
 }

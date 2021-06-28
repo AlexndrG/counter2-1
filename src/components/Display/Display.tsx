@@ -17,6 +17,7 @@ export const Display = (props: DisplayPropsType) => {
         }
     } else {
         displayValue = props.counterValue.toString()
+        addClassName = s.counterOK
         if (props.error) {
             addClassName = s.counterFinish
         }

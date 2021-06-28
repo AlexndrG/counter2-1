@@ -24,23 +24,19 @@ export const CounterWithParams = (props: CounterWithParamsPropsType) => {
 
     return (
         <div className={s.main}>
-            <div className={s.block}>
-                <CounterSettings
-                    minValue={minValue}
-                    maxValue={maxValue}
-                    changeMinValue={changeMinValue}
-                    changeMaxValue={changeMaxValue}
-                />
-            </div>
+            <CounterSettings
+                minValue={minValue}
+                maxValue={maxValue}
+                changeMinValue={changeMinValue}
+                changeMaxValue={changeMaxValue}
+            />
 
-            <div className={s.block}>
-                <Counter
-                    minValue={minValue}
-                    maxValue={maxValue}
-                    text={text}
-                    textError={textError}
-                />
-            </div>
+            <Counter
+                minValue={minValue}
+                maxValue={maxValue}
+                text={text}
+                textError={textError}
+            />
         </div>
     )
 }

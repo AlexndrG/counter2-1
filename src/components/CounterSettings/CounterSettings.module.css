@@ -1,24 +1,24 @@
-.settings {
+.main {
     display: inline-block;
     border: 2px solid blue;
     border-radius: 5px;
-    padding: 10px;
+    vertical-align: bottom;
+    margin: 0 10px;
 }
 
 .changers {
-    display: inline-block;
+    box-sizing: border-box;
     width: 250px;
     height: 120px;
     border: 2px solid blue;
     border-radius: 5px;
-    padding: 10px;
+    margin: 10px;
 }
 
 .buttons {
-    text-align: center;
     box-sizing: border-box;
     width: 250px;
     border: 2px solid blue;
     border-radius: 5px;
-    margin: 10px 0 0 0;
+    margin: 10px;
 }
