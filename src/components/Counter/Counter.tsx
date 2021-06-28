@@ -7,7 +7,7 @@ type CounterPropsType = {
     minValue: number
     maxValue: number
     text: string
-    textError: boolean
+    error: boolean
 }
 
 export const Counter = (props: CounterPropsType) => {
@@ -37,7 +37,7 @@ export const Counter = (props: CounterPropsType) => {
             <Display
                 counterValue={counter}
                 text={props.text}
-                error={props.textError || counter >= props.maxValue}
+                error={props.error || counter >= props.maxValue}
             />
 
             <div className={s.buttons}>
