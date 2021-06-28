@@ -4,48 +4,48 @@ import {Display} from '../Display/Display';
 import {Button} from '../Button/Button';
 
 type CounterPropsType = {
+    counter: number
     minValue: number
     maxValue: number
     text: string
     error: boolean
+    setCounterValue: (value: number) => void
 }
 
 export const Counter = (props: CounterPropsType) => {
-    const [counter, setCounter] = useState<number>(props.minValue)
-
-    if (props.minValue > counter || props.maxValue < counter) {
-        setCounter(props.minValue)
+    if (props.minValue > props.counter || props.maxValue < props.counter) {
+        props.setCounterValue(props.minValue)
     }
 
     const increment = () => {
-        if (counter < props.maxValue) {
-            setCounter(counter + 1)
+        if (props.counter < props.maxValue) {
+            props.setCounterValue(props.counter + 1)
         }
     }
 
     const reset = () => {
-        setCounter(props.minValue)
+        props.setCounterValue(props.minValue)
     }
 
     return (
         <div className={s.main}>
 
             <Display
-                counterValue={counter}
+                counterValue={props.counter}
                 text={props.text}
-                error={props.error || counter >= props.maxValue}
+                error={ !!props.text ? props.error : props.counter >= props.maxValue}
             />
 
             <div className={s.buttons}>
                 <Button
                     name={'Inc'}
-                    disabled={!!props.text || counter >= props.maxValue}
+                    disabled={!!props.text || props.counter >= props.maxValue}
                     callback={increment}
                 />
 
                 <Button
                     name={'Reset'}
-                    disabled={!!props.text || counter === props.minValue}
+                    disabled={!!props.text || props.counter === props.minValue}
                     callback={reset}
                 />
             </div>

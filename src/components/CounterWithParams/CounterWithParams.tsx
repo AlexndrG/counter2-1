@@ -9,6 +9,7 @@ type CounterWithParamsPropsType = {
 }
 
 export const CounterWithParams = (props: CounterWithParamsPropsType) => {
+    const [counter, setCounter] = useState<number>(props.min)
     const [minValue, setMinValue] = useState<number>(props.min)
     const [maxValue, setMaxValue] = useState<number>(props.max)
     const [text, setText] = useState('')
@@ -22,7 +23,12 @@ export const CounterWithParams = (props: CounterWithParamsPropsType) => {
     const changeValues = (minValue: number, maxValue: number) => {
         setMinValue(minValue)
         setMaxValue(maxValue)
+        setCounter(minValue)
         makeMessage('',false)
+    }
+
+    const setCounterValue = (value: number) => {
+        setCounter(value)
     }
 
     return (
@@ -35,10 +41,12 @@ export const CounterWithParams = (props: CounterWithParamsPropsType) => {
             />
 
             <Counter
+                counter={counter}
                 minValue={minValue}
                 maxValue={maxValue}
                 text={text}
                 error={error}
+                setCounterValue={setCounterValue}
             />
         </div>
     )
