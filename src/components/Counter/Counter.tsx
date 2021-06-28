@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './Counter.module.css'
 import {Display} from '../Display/Display';
 import {Button} from '../Button/Button';

@@ -10,32 +10,41 @@ const MIN_VALUE_NAME = 'CounterMinValue_Name'
 const MAX_VALUE_NAME = 'CounterMaxValue_Name'
 
 export const CounterWithParams = () => {
-    let min = INIT_MIN_VALUE
-    let max = INIT_MAX_VALUE
+    const [counter, setCounter] = useState<number>(INIT_MIN_VALUE)
+    const [minValue, setMinValue] = useState<number>(INIT_MIN_VALUE)
+    const [maxValue, setMaxValue] = useState<number>(INIT_MAX_VALUE)
+    const [text, setText] = useState('')
+    const [error, setError] = useState(false)
 
-    const inintValues = () => {
+    const [currentMinValue, setCurrentMinValue] = useState<number>(INIT_MIN_VALUE)
+    const [currentMaxValue, setCurrentMaxValue] = useState<number>(INIT_MIN_VALUE)
+
+
+    useEffect(() => {
         const minString = localStorage.getItem(MIN_VALUE_NAME)
         const maxString = localStorage.getItem(MAX_VALUE_NAME)
 
         if (minString && maxString) {
-            let minValue = JSON.parse(minString)
-            let maxValue = JSON.parse(maxString)
+            const minNumber = JSON.parse(minString)
+            const maxNumber = JSON.parse(maxString)
 
-            if (minValue >= 0 && maxValue > minValue) {
-                min = minValue
-                max = maxValue
+            if (minNumber >= 0 && maxNumber > minNumber) {
+                setCounter(minNumber)
+                setMinValue(minNumber)
+                setMaxValue(maxNumber)
+                setCurrentMinValue(minNumber)
+                setCurrentMaxValue(maxNumber)
             }
         }
-    }
-    inintValues()
+    }, [])
 
+    useEffect(() => {
+        localStorage.setItem(MIN_VALUE_NAME, JSON.stringify(minValue))
+    }, [minValue])
 
-    const [counter, setCounter] = useState<number>(min)
-    const [minValue, setMinValue] = useState<number>(min)
-    const [maxValue, setMaxValue] = useState<number>(max)
-    const [text, setText] = useState('')
-    const [error, setError] = useState(false)
-
+    useEffect(() => {
+        localStorage.setItem(MAX_VALUE_NAME, JSON.stringify(maxValue))
+    }, [maxValue])
 
     const makeMessage = (text: string, error: boolean) => {
         setError(error)
@@ -47,8 +56,6 @@ export const CounterWithParams = () => {
         setMaxValue(maxValue)
         setCounter(minValue)
         makeMessage('', false)
-        localStorage.setItem(MIN_VALUE_NAME, JSON.stringify(minValue))
-        localStorage.setItem(MAX_VALUE_NAME, JSON.stringify(maxValue))
     }
 
     const setCounterValue = (value: number) => {
@@ -58,10 +65,14 @@ export const CounterWithParams = () => {
     return (
         <div className={s.main}>
             <CounterSettings
-                minValue={minValue}
-                maxValue={maxValue}
+                minValue={currentMinValue}
+                maxValue={currentMaxValue}
                 changeValues={changeValues}
                 makeMessage={makeMessage}
+                currentMinValue = {currentMinValue}
+                currentMaxValue = {currentMaxValue}
+                setCurrentMinValue={(value) => setCurrentMinValue(value)}
+                setCurrentMaxValue={(value) => setCurrentMaxValue(value)}
             />
 
             <Counter

@@ -8,15 +8,16 @@ type CounterSettingsPropsType = {
     maxValue: number
     changeValues: (minValue: number, maxValue: number) => void
     makeMessage: (text: string, error: boolean) => void
+    currentMinValue: number
+    currentMaxValue: number
+    setCurrentMinValue: (value: number) => void
+    setCurrentMaxValue: (value: number) => void
 }
 
 export const CounterSettings = (props: CounterSettingsPropsType) => {
     const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
-    const [currentMinValue, setCurrentMinValue] = useState<number>(props.minValue)
-    const [currentMaxValue, setCurrentMaxValue] = useState<number>(props.maxValue)
     const [minError, setMinError] = useState<boolean>(false)
     const [maxError, setMaxError] = useState<boolean>(false)
-
 
     const checkError = (minValue: number, maxValue: number) => {
         const minError = minValue < 0 || minValue >= maxValue
@@ -34,18 +35,18 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
     }
 
     const changeMaxValue = (value: number) => {
-        setCurrentMaxValue(value)
-        checkError(currentMinValue, value)
+        props.setCurrentMaxValue(value)
+        checkError(props.currentMinValue, value)
     }
 
     const changeMinValue = (value: number) => {
-        setCurrentMinValue(value)
-        checkError(value, currentMaxValue)
+        props.setCurrentMinValue(value)
+        checkError(value, props.currentMaxValue)
     }
 
     const setParameters = () => {
         setButtonDisabled(true)
-        props.changeValues(currentMinValue, currentMaxValue)
+        props.changeValues(props.currentMinValue, props.currentMaxValue)
     }
 
 
@@ -55,14 +56,14 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
             <div className={s.changers}>
                 <Changer
                     text={'max value:'}
-                    value={currentMaxValue}
+                    value={props.currentMaxValue}
                     changeValue={changeMaxValue}
                     error={maxError}
                 />
 
                 <Changer
                     text={'start value:'}
-                    value={currentMinValue}
+                    value={props.currentMinValue}
                     changeValue={changeMinValue}
                     error={minError}
                 />
