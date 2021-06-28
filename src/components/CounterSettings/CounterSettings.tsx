@@ -14,34 +14,33 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
     const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
     const [currentMinValue, setCurrentMinValue] = useState<number>(props.minValue)
     const [currentMaxValue, setCurrentMaxValue] = useState<number>(props.maxValue)
-    const [errorMin, setErrorMin] = useState<boolean>(false)
-    const [errorMax, setErrorMax] = useState<boolean>(false)
+    const [minError, setMinError] = useState<boolean>(false)
+    const [maxError, setMaxError] = useState<boolean>(false)
 
 
-    const selectMinValue = (value: number) => {
-        setCurrentMinValue(value)
-        if (value < 0 || value >= currentMaxValue) {
-            setButtonDisabled(true)
+    const checkError = (minValue: number, maxValue: number) => {
+        const minError = minValue < 0 || minValue >= maxValue
+        const maxError = maxValue < 0 || maxValue <= minValue
+        setMinError(minError)
+        setMaxError(maxError)
+
+        const error = minError || maxError
+        setButtonDisabled(error)
+        if (error) {
             props.makeMessage('Incorrect value!', true)
-            setErrorMin(true)
         } else {
-            setButtonDisabled(false)
-            props.makeMessage(`enter values and press 'Set'`, false)
-            setErrorMin(false)
+            props.makeMessage(`EnterValues and press 'Set'`, false)
         }
     }
 
-    const selectMaxValue = (value: number) => {
+    const changeMaxValue = (value: number) => {
         setCurrentMaxValue(value)
-        if (value < 0 || value <= currentMinValue) {
-            setButtonDisabled(true)
-            props.makeMessage('Incorrect value!', true)
-            setErrorMax(true)
-        } else {
-            setButtonDisabled(false)
-            props.makeMessage(`enter values and press 'Set'`, false)
-            setErrorMax(false)
-        }
+        checkError(currentMinValue, value)
+    }
+
+    const changeMinValue = (value: number) => {
+        setCurrentMinValue(value)
+        checkError(value , currentMaxValue)
     }
 
     return (
@@ -51,15 +50,15 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
                 <Changer
                     text={'max value:'}
                     value={currentMaxValue}
-                    selectValue={selectMaxValue}
-                    error={errorMax}
+                    changeValue={changeMaxValue}
+                    error={maxError}
                 />
 
                 <Changer
                     text={'start value:'}
                     value={currentMinValue}
-                    selectValue={selectMinValue}
-                    error={errorMin}
+                    changeValue={changeMinValue}
+                    error={minError}
                 />
             </div>
 
@@ -67,7 +66,7 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
                 <Button
                     name={'Set'}
                     disabled={buttonDisabled}
-                    callback={()=>props.changeValues(currentMinValue, currentMaxValue)}
+                    callback={() => props.changeValues(currentMinValue, currentMaxValue)}
                 />
             </div>
 

@@ -5,13 +5,13 @@ import s from './Changer.module.css'
 type ChangerPropsType = {
     text: string
     value: number
-    selectValue: (value: number) => void
+    changeValue: (value: number) => void
     error: boolean
 }
 
 export const Changer = (props: ChangerPropsType) => {
     const onChangeValue = (e:ChangeEvent<HTMLInputElement>) => {
-        props.selectValue(e.currentTarget.valueAsNumber)
+        props.changeValue(e.currentTarget.valueAsNumber)
     }
 
     return (

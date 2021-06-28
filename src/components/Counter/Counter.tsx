@@ -13,12 +13,8 @@ type CounterPropsType = {
 export const Counter = (props: CounterPropsType) => {
     const [counter, setCounter] = useState<number>(props.minValue)
 
-    if (props.minValue > counter) {
+    if (props.minValue > counter || props.maxValue < counter) {
         setCounter(props.minValue)
-    }
-
-    if (props.maxValue < counter) {
-        setCounter(props.maxValue)
     }
 
     const increment = () => {
