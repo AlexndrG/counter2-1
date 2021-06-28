@@ -21,7 +21,7 @@ export const CounterWithParams = () => {
             let minValue = JSON.parse(minString)
             let maxValue = JSON.parse(maxString)
 
-            if (min >= 0 && max > min) {
+            if (minValue >= 0 && maxValue > minValue) {
                 min = minValue
                 max = maxValue
             }
