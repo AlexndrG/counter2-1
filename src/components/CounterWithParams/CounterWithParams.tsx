@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './CounterWithParams.module.css'
 import {Counter} from '../Counter/Counter';
 import {CounterSettings} from '../CounterSettings/CounterSettings';
 
+const INIT_MIN_VALUE = 0;
+const INIT_MAX_VALUE = 5;
 
 const MIN_VALUE_NAME = 'CounterMinValue_Name'
 const MAX_VALUE_NAME = 'CounterMaxValue_Name'
 
 export const CounterWithParams = () => {
-    let min = 0
-    let max = 5
+    let min = INIT_MIN_VALUE
+    let max = INIT_MAX_VALUE
 
     const inintValues = () => {
         const minString = localStorage.getItem(MIN_VALUE_NAME)
