@@ -65,8 +65,6 @@ export const CounterWithParams = () => {
     return (
         <div className={s.main}>
             <CounterSettings
-                minValue={currentMinValue}
-                maxValue={currentMaxValue}
                 changeValues={changeValues}
                 makeMessage={makeMessage}
                 currentMinValue = {currentMinValue}

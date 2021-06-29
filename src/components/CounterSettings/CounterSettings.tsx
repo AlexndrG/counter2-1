@@ -4,8 +4,6 @@ import {Button} from '../Button/Button';
 import {Changer} from '../Changer/Changer';
 
 type CounterSettingsPropsType = {
-    minValue: number
-    maxValue: number
     changeValues: (minValue: number, maxValue: number) => void
     makeMessage: (text: string, error: boolean) => void
     currentMinValue: number
