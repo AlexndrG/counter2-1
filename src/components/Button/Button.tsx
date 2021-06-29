@@ -1,13 +1,13 @@
 import React from 'react';
 import s from './Button.module.css'
 
-type ButtobPropsType = {
+type ButtonPropsType = {
     name: string
     disabled: boolean
     callback: () => void
 }
 
-export const Button = (props: ButtobPropsType) => {
+export const Button = (props: ButtonPropsType) => {
 
     const onClickHandler = () => {
         props.callback()

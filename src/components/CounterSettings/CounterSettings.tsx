@@ -4,12 +4,12 @@ import {Button} from '../Button/Button';
 import {Changer} from '../Changer/Changer';
 
 type CounterSettingsPropsType = {
-    changeValues: (minValue: number, maxValue: number) => void
     makeMessage: (text: string, error: boolean) => void
-    currentMinValue: number
-    currentMaxValue: number
-    setCurrentMinValue: (value: number) => void
-    setCurrentMaxValue: (value: number) => void
+    minValue: number
+    maxValue: number
+    setNewMinValue: (value: number) => void
+    setNewMaxValue: (value: number) => void
+    setButtonPressed: () => void
 }
 
 export const CounterSettings = (props: CounterSettingsPropsType) => {
@@ -20,8 +20,8 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
     const checkError = (minValue: number, maxValue: number) => {
         const minError = minValue < 0 || minValue >= maxValue
         const maxError = maxValue < 0 || maxValue <= minValue
-        setMinError(minError)
-        setMaxError(maxError)
+       setMinError(minError)
+       setMaxError(maxError)
 
         const error = minError || maxError
         setButtonDisabled(error)
@@ -32,19 +32,19 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
         }
     }
 
-    const changeMaxValue = (value: number) => {
-        props.setCurrentMaxValue(value)
-        checkError(props.currentMinValue, value)
+    const changeMaxValue = (maxValue: number) => {
+        props.setNewMaxValue(maxValue)
+        checkError(props.minValue, maxValue)
     }
 
-    const changeMinValue = (value: number) => {
-        props.setCurrentMinValue(value)
-        checkError(value, props.currentMaxValue)
+    const changeMinValue = (minValue: number) => {
+        props.setNewMinValue(minValue)
+        checkError(minValue, props.maxValue)
     }
 
-    const setParameters = () => {
+    const setButtonPressed = () => {
         setButtonDisabled(true)
-        props.changeValues(props.currentMinValue, props.currentMaxValue)
+        props.setButtonPressed()
     }
 
 
@@ -54,14 +54,14 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
             <div className={s.changers}>
                 <Changer
                     text={'max value:'}
-                    value={props.currentMaxValue}
+                    value={props.maxValue}
                     changeValue={changeMaxValue}
                     error={maxError}
                 />
 
                 <Changer
                     text={'start value:'}
-                    value={props.currentMinValue}
+                    value={props.minValue}
                     changeValue={changeMinValue}
                     error={minError}
                 />
@@ -71,7 +71,7 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
                 <Button
                     name={'Set'}
                     disabled={buttonDisabled}
-                    callback={setParameters}
+                    callback={setButtonPressed}
                 />
             </div>
 

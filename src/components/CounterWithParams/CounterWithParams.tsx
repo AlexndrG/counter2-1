@@ -6,8 +6,8 @@ import {CounterSettings} from '../CounterSettings/CounterSettings';
 const INIT_MIN_VALUE = 0;
 const INIT_MAX_VALUE = 5;
 
-const MIN_VALUE_NAME = 'CounterMinValue_Name'
-const MAX_VALUE_NAME = 'CounterMaxValue_Name'
+const MIN_VALUE_NAME = 'CounterMinValue'
+const MAX_VALUE_NAME = 'CounterMaxValue'
 
 export const CounterWithParams = () => {
     const [counter, setCounter] = useState<number>(INIT_MIN_VALUE)
@@ -15,10 +15,6 @@ export const CounterWithParams = () => {
     const [maxValue, setMaxValue] = useState<number>(INIT_MAX_VALUE)
     const [text, setText] = useState('')
     const [error, setError] = useState(false)
-
-    const [currentMinValue, setCurrentMinValue] = useState<number>(INIT_MIN_VALUE)
-    const [currentMaxValue, setCurrentMaxValue] = useState<number>(INIT_MIN_VALUE)
-
 
     useEffect(() => {
         const minString = localStorage.getItem(MIN_VALUE_NAME)
@@ -32,8 +28,6 @@ export const CounterWithParams = () => {
                 setCounter(minNumber)
                 setMinValue(minNumber)
                 setMaxValue(maxNumber)
-                setCurrentMinValue(minNumber)
-                setCurrentMaxValue(maxNumber)
             }
         }
     }, [])
@@ -46,40 +40,46 @@ export const CounterWithParams = () => {
         localStorage.setItem(MAX_VALUE_NAME, JSON.stringify(maxValue))
     }, [maxValue])
 
-    const makeMessage = (text: string, error: boolean) => {
-        setError(error)
-        setText(text)
-    }
-
-    const changeValues = (minValue: number, maxValue: number) => {
-        setMinValue(minValue)
-        setMaxValue(maxValue)
-        setCounter(minValue)
-        makeMessage('', false)
-    }
 
     const setCounterValue = (value: number) => {
         setCounter(value)
     }
 
+    const makeMessage = (text: string, error: boolean) => {
+        setText(text)
+        setError(error)
+    }
+
+    const setNewMinValue = (value: number) => {
+        setMinValue(value)
+    }
+    const setNewMaxValue = (value: number) => {
+        setMaxValue(value)
+    }
+
+    const setButtonPressed = () => {
+        setCounter(minValue)
+        makeMessage('',false)
+    }
+
     return (
         <div className={s.main}>
             <CounterSettings
-                changeValues={changeValues}
                 makeMessage={makeMessage}
-                currentMinValue = {currentMinValue}
-                currentMaxValue = {currentMaxValue}
-                setCurrentMinValue={(value) => setCurrentMinValue(value)}
-                setCurrentMaxValue={(value) => setCurrentMaxValue(value)}
+                minValue={minValue}
+                maxValue={maxValue}
+                setNewMinValue={setNewMinValue}
+                setNewMaxValue={setNewMaxValue}
+                setButtonPressed={setButtonPressed}
             />
 
             <Counter
                 counter={counter}
                 minValue={minValue}
                 maxValue={maxValue}
+                setCounterValue={setCounterValue}
                 text={text}
                 error={error}
-                setCounterValue={setCounterValue}
             />
         </div>
     )
