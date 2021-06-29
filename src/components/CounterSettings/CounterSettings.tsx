@@ -28,7 +28,7 @@ export const CounterSettings = (props: CounterSettingsPropsType) => {
         if (error) {
             props.makeMessage('Incorrect value!', true)
         } else {
-            props.makeMessage(`EnterValues and press 'Set'`, false)
+            props.makeMessage(`Enter values and press 'Set'`, false)
         }
     }
 
